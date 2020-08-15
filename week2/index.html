@@ -3,9 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>React course - Week 2</title>
+    <style>
+        .App{
+            font-family: sans-serif;
+        }
+
+        .TimeboxEditor{
+            text-align: right;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        input{
+            min-width: 60%;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+        button{
+            font-size: 16px;
+            margin-left: 10px; 
+        }
+
+        .Timebox{
+            border: 1px solid gray;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .Clock{
+            color: orangered;
+        }
+
+        .ProgressBar{
+            border: 1px solid pink;
+            border-radius: 5px;
+            height: 25px;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .ProgressBar > div{
+            width: calc(100% - var(--passedTime));
+            height: 100%;
+            background-color: orangered;
+            float: right;
+        }
+
+        .inactive{
+            filter: blur(2px) grayscale(1);
+        }
+    </style>
 </head>
 <body>
-    
+    <h1>React course - Week 2!</h1>
+    <hr>
+    <div class="App">
+        <div class="TimeboxEditor inactive">
+            <label>What?<input disabled value="Learning React" type="text"></label><br>
+            <label>How long?<input disabled value="25" type="number"></label><br>
+            <button>Start task</button>
+        </div>
+        <div class="Timebox">
+            <h1>Learning React</h1>
+            <h2 class="Clock">Time left 13:37</h2>
+            <div class="ProgressBar " >
+                <div style="--passedTime: 20%"></div>
+            </div>
+            <button disabled>Start</button>
+            <button>Stop</button>
+            <button>Pause</button>
+            Breaks: 2
+        </div>
+    </div>
 </body>
 </html>
