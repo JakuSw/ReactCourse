@@ -39,45 +39,106 @@
         }
 
         .ProgressBar{
-            border: 1px solid pink;
+            border: 1px solid orangered;
             border-radius: 5px;
             height: 25px;
             margin-bottom: 20px;
-            padding: 10px;
-        }
-
-        .ProgressBar > div{
-            width: calc(100% - var(--passedTime));
-            height: 100%;
-            background-color: orangered;
-            float: right;
+            padding: 5px;
+            background: linear-gradient(to left, orangered calc(100% - var(--passedTime)), transparent calc(100% - var(--passedTime)), transparent var(--passedTime), white var(--passedTime));
         }
 
         .inactive{
             filter: blur(2px) grayscale(1);
         }
     </style>
+
 </head>
 <body>
-    <h1>React course - Week 2!</h1>
-    <hr>
-    <div class="App">
-        <div class="TimeboxEditor inactive">
-            <label>What?<input disabled value="Learning React" type="text"></label><br>
-            <label>How long?<input disabled value="25" type="number"></label><br>
-            <button>Start task</button>
-        </div>
-        <div class="Timebox">
-            <h1>Learning React</h1>
-            <h2 class="Clock">Time left 13:37</h2>
-            <div class="ProgressBar " >
-                <div style="--passedTime: 20%"></div>
-            </div>
-            <button disabled>Start</button>
-            <button>Stop</button>
-            <button>Pause</button>
-            Breaks: 2
-        </div>
+    <div id="root">
     </div>
 </body>
+<script type="text/javascript">
+
+    function createButtonWithText(textToDisplay, isDisabled){
+        const buttonToAdd = document.createElement("button");
+        buttonToAdd.textContent = textToDisplay;
+        buttonToAdd.disabled = isDisabled;
+        return buttonToAdd;
+    }
+
+    function createInputWithText(textToDisplay, typeOfField, isActive){
+        const inputToAdd = document.createElement("input");
+        inputToAdd.type = typeOfField;
+        inputToAdd.value = textToDisplay;
+        inputToAdd.disabled = true;
+        return inputToAdd;
+    }
+
+    function createLabelWithText(textToDisplay){
+        const labelToAdd = document.createElement("label");
+        labelToAdd.textContent = textToDisplay;
+        return labelToAdd;
+    }
+
+    function addBr(){
+        return document.createElement("br");
+    }
+
+    function addH1WithText(textToDisplay, nameOfClass){
+        const h1ToAdd = document.createElement("h1");
+        h1ToAdd.textContent = textToDisplay;
+        h1ToAdd.className = nameOfClass;
+        return h1ToAdd;
+    }
+
+    function addH2WithText(textToDisplay, nameOfClass){
+        const h2ToAdd = document.createElement("h2");
+        h2ToAdd.textContent = textToDisplay;
+        h2ToAdd.className = nameOfClass;
+        return h2ToAdd;
+    }
+
+    function createInputWithLabel(inputObject, labelObject){
+        labelObject.appendChild(inputObject);
+        return labelObject;
+    }
+
+    function addProgressBar(howMuchIsCompleted){
+        const progressBarToAdd = document.createElement("div");
+        progressBarToAdd.className = "ProgressBar";
+        progressBarToAdd.style = `--passedTime: ${howMuchIsCompleted}%`;
+        return progressBarToAdd;
+        
+    }
+
+    const rootElement = document.getElementById("root");
+    const appDiv = document.createElement("div");
+    appDiv.className = "App";
+
+    const timeboxEditor = document.createElement("div");
+    timeboxEditor.className = "TimeboxEditor";
+    timeboxEditor.appendChild(createInputWithLabel(createInputWithText("Learning React", "text", false), createLabelWithText("What?")));
+    timeboxEditor.appendChild(addBr());
+    timeboxEditor.appendChild(createInputWithLabel(createInputWithText("25", "number", false), createLabelWithText("How long?")));
+    timeboxEditor.appendChild(addBr());
+    timeboxEditor.appendChild(createButtonWithText("Start task", false));
+
+    appDiv.append(timeboxEditor);
+
+    const timebox = document.createElement("div");
+    timebox.className = "Timebox";
+    timebox.appendChild(addH1WithText("Learning React", ""));
+    timebox.appendChild(addH2WithText("Time left 13:37", "Clock"));
+    timebox.appendChild(addProgressBar(50));
+    timebox.appendChild(createButtonWithText("Start", true));
+    timebox.appendChild(createButtonWithText("Stop", false));
+    timebox.appendChild(createButtonWithText("Pause", false));
+    timebox.append(" Breaks 2");
+    appDiv.append(timebox);
+    rootElement.append(appDiv);
+
+
+
+
+</script>
 </html>
