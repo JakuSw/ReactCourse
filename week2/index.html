@@ -51,7 +51,8 @@
             filter: blur(2px) grayscale(1);
         }
     </style>
-
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 </head>
 <body>
     <div id="root">
@@ -59,83 +60,115 @@
 </body>
 <script type="text/javascript">
 
-    function createButtonWithText(textToDisplay, isDisabled){
-        const buttonToAdd = document.createElement("button");
-        buttonToAdd.textContent = textToDisplay;
-        buttonToAdd.disabled = isDisabled;
-        return buttonToAdd;
+    function createLabelAndInputWithText(textToDisplayInLabel, textToDisplayInInput, contentType,isDisabled){
+        const label = React.createElement(
+            "label",
+            {
+                children: [textToDisplayInLabel, React.createElement(
+                    "input",
+                    {
+                        type: contentType,
+                        value: textToDisplayInInput,
+                        disabled: isDisabled
+                    }
+                )]
+            }
+        );
+        return label;
     }
 
-    function createInputWithText(textToDisplay, typeOfField, isActive){
-        const inputToAdd = document.createElement("input");
-        inputToAdd.type = typeOfField;
-        inputToAdd.value = textToDisplay;
-        inputToAdd.disabled = true;
-        return inputToAdd;
+    function createButton (textToDisplayInButton, isDisabled){
+        return React.createElement(
+            "button",
+            {
+                disabled: isDisabled,
+                children: textToDisplayInButton
+            }
+        );
     }
 
-    function createLabelWithText(textToDisplay){
-        const labelToAdd = document.createElement("label");
-        labelToAdd.textContent = textToDisplay;
-        return labelToAdd;
+    function createH1WithText(textToDisplay) {
+        return React.createElement(
+            "h1",
+            {
+                children: textToDisplay
+            }
+        );    
     }
 
-    function addBr(){
-        return document.createElement("br");
+    function createH2WithText(textToDisplay) {
+        return React.createElement(
+            "h2",
+            {
+                children: textToDisplay
+            }
+        );    
     }
 
-    function addH1WithText(textToDisplay, nameOfClass){
-        const h1ToAdd = document.createElement("h1");
-        h1ToAdd.textContent = textToDisplay;
-        h1ToAdd.className = nameOfClass;
-        return h1ToAdd;
-    }
-
-    function addH2WithText(textToDisplay, nameOfClass){
-        const h2ToAdd = document.createElement("h2");
-        h2ToAdd.textContent = textToDisplay;
-        h2ToAdd.className = nameOfClass;
-        return h2ToAdd;
-    }
-
-    function createInputWithLabel(inputObject, labelObject){
-        labelObject.appendChild(inputObject);
-        return labelObject;
-    }
-
-    function addProgressBar(howMuchIsCompleted){
-        const progressBarToAdd = document.createElement("div");
-        progressBarToAdd.className = "ProgressBar";
-        progressBarToAdd.style = `--passedTime: ${howMuchIsCompleted}%`;
-        return progressBarToAdd;
-        
+    function createProgressBar(howMuchIsCompleted) {
+        const progressBar = React.createElement(
+        "div",
+            {
+                className: "ProgressBar",
+                style: {"--passedTime": `${howMuchIsCompleted}%`}
+            }
+        );
+        return progressBar;
     }
 
     const rootElement = document.getElementById("root");
-    const appDiv = document.createElement("div");
-    appDiv.className = "App";
+    const createTitle = React.createElement(
+            "h1",
+            {
+                children: "React course - week 2"
+            }
+        );
+    const createHr = React.createElement("hr");
+    const createBr = React.createElement("br");
+    
+    
 
-    const timeboxEditor = document.createElement("div");
-    timeboxEditor.className = "TimeboxEditor";
-    timeboxEditor.appendChild(createInputWithLabel(createInputWithText("Learning React", "text", false), createLabelWithText("What?")));
-    timeboxEditor.appendChild(addBr());
-    timeboxEditor.appendChild(createInputWithLabel(createInputWithText("25", "number", false), createLabelWithText("How long?")));
-    timeboxEditor.appendChild(addBr());
-    timeboxEditor.appendChild(createButtonWithText("Start task", false));
+    const timeboxEditor = React.createElement(
+        "div",
+        {
+            className: "TimeboxEditor inactive",
+            children: [
+                createLabelAndInputWithText("What?", "Learn React", "text", true),
+                createBr,
+                createLabelAndInputWithText("How long?", "25", "number", true),
+                createBr,
+                createButton("Start task", true)
+                ]
+        }
+    );
+    
+    const timebox = React.createElement(
+        "div",
+        {
+            className: "Timebox",
+            children: [
+                createH1WithText("Learning React"), 
+                createH2WithText("Time left 13:37"),
+                createProgressBar(50),
+                createButton("Start", true),
+                createButton("Stop", false),
+                createButton("Pause", false),
+                "Breaks 2"
+                ]
+        }
+    );
 
-    appDiv.append(timeboxEditor);
 
-    const timebox = document.createElement("div");
-    timebox.className = "Timebox";
-    timebox.appendChild(addH1WithText("Learning React", ""));
-    timebox.appendChild(addH2WithText("Time left 13:37", "Clock"));
-    timebox.appendChild(addProgressBar(50));
-    timebox.appendChild(createButtonWithText("Start", true));
-    timebox.appendChild(createButtonWithText("Stop", false));
-    timebox.appendChild(createButtonWithText("Pause", false));
-    timebox.append(" Breaks 2");
-    appDiv.append(timebox);
-    rootElement.append(appDiv);
+
+    const appDiv= React.createElement(
+        "div",
+        {
+            className: "App",
+            children: [createTitle, createHr,timeboxEditor, timebox]
+        }
+    );
+
+    ReactDOM.render(appDiv, rootElement);
 
 
 
