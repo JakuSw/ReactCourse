@@ -51,124 +51,101 @@
             filter: blur(2px) grayscale(1);
         }
     </style>
+
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
 </head>
 <body>
-    <div id="root">
+    <h1>React course - Week 2!</h1>
+    <hr>
+    <div class="App">
+        <div class="TimeboxEditor inactive">
+            <label>What?<input disabled value="Learning React" type="text"></label><br>
+            <label>How long?<input disabled value="25" type="number"></label><br>
+            <button>Start task</button>
+        </div>
+        <div class="Timebox">
+            <h1>Learning React</h1>
+            <div id="root"></div>
+            <div class="ProgressBar " style="--passedTime: 40%"></div>
+            <button disabled>Start</button>
+            <button>Stop</button>
+            <button>Pause</button>
+            Breaks: 2
+        </div>
     </div>
 </body>
-<script type="text/javascript">
+<script type="text/babel">
 
-    function createLabelAndInputWithText(textToDisplayInLabel, textToDisplayInInput, contentType,isDisabled){
-        const label = React.createElement(
-            "label",
-            {
-                children: [textToDisplayInLabel, React.createElement(
-                    "input",
-                    {
-                        type: contentType,
-                        value: textToDisplayInInput,
-                        disabled: isDisabled
-                    }
-                )]
-            }
-        );
-        return label;
+    function Clock({hours, minutes, seconds, miliseconds}){
+        hours = hoursValidation(hours);
+        minutes = minutesAndSecondsValidation(minutes);
+        seconds = minutesAndSecondsValidation(seconds);
+        miliseconds = milisecondsValidation(miliseconds);
+
+        hours = addZeroWhenOneDigit(hours);
+        minutes = addZeroWhenOneDigit(minutes);
+        seconds = addZeroWhenOneDigit(seconds);
+        miliseconds = addZerosForMiliseconds(miliseconds);
+
+        return <h2 className="Clock">Time left {hours}:{minutes}:{seconds}:{miliseconds}</h2>
     }
 
-    function createButton (textToDisplayInButton, isDisabled){
-        return React.createElement(
-            "button",
-            {
-                disabled: isDisabled,
-                children: textToDisplayInButton
-            }
-        );
+    function addZeroWhenOneDigit(numberToCheck){
+        if(numberToCheck.toString().length === 1){
+            return `0${numberToCheck.toString()}`
+        }else {
+            return numberToCheck.toString();
+        }
     }
 
-    function createH1WithText(textToDisplay) {
-        return React.createElement(
-            "h1",
-            {
-                children: textToDisplay
-            }
-        );    
+    function addZerosForMiliseconds(numberToCheck){
+        if(numberToCheck.toString().length === 1){
+            return `00${numberToCheck.toString()}`
+        }else if(numberToCheck.toString().length === 2){
+            return `0${numberToCheck.toString()}`
+        }else {
+            return numberToCheck.toString();
+        }
     }
 
-    function createH2WithText(textToDisplay) {
-        return React.createElement(
-            "h2",
-            {
-                children: textToDisplay
-            }
-        );    
+    function hoursValidation(numberToCheck){
+        if(numberToCheck < 0){
+            return 0;
+        }else if(numberToCheck > 23){
+            return 23;
+        }else{
+            return numberToCheck;
+        }
     }
 
-    function createProgressBar(howMuchIsCompleted) {
-        const progressBar = React.createElement(
-        "div",
-            {
-                className: "ProgressBar",
-                style: {"--passedTime": `${howMuchIsCompleted}%`}
-            }
-        );
-        return progressBar;
+    function minutesAndSecondsValidation(numberToCheck){
+        if(numberToCheck < 0){
+            return 0;
+        }else if(numberToCheck > 59){
+            return 59;
+        }else{
+            return numberToCheck;
+        }
+    }
+
+    function milisecondsValidation(numberToCheck){
+        if(numberToCheck < 0){
+            return 0;
+        }else if(numberToCheck > 999){
+            return 999;
+        }else{
+            return numberToCheck;
+        }
     }
 
     const rootElement = document.getElementById("root");
-    const createTitle = React.createElement(
-            "h1",
-            {
-                children: "React course - week 2"
-            }
-        );
-    const createHr = React.createElement("hr");
-    const createBr = React.createElement("br");
-    
-    
+    const element = (<Clock hours={3} minutes={7} seconds={0} miliseconds={23} />);
 
-    const timeboxEditor = React.createElement(
-        "div",
-        {
-            className: "TimeboxEditor inactive",
-            children: [
-                createLabelAndInputWithText("What?", "Learn React", "text", true),
-                createBr,
-                createLabelAndInputWithText("How long?", "25", "number", true),
-                createBr,
-                createButton("Start task", true)
-                ]
-        }
-    );
-    
-    const timebox = React.createElement(
-        "div",
-        {
-            className: "Timebox",
-            children: [
-                createH1WithText("Learning React"), 
-                createH2WithText("Time left 13:37"),
-                createProgressBar(50),
-                createButton("Start", true),
-                createButton("Stop", false),
-                createButton("Pause", false),
-                "Breaks 2"
-                ]
-        }
-    );
+    ReactDOM.render(element, rootElement);
 
-
-
-    const appDiv= React.createElement(
-        "div",
-        {
-            className: "App",
-            children: [createTitle, createHr,timeboxEditor, timebox]
-        }
-    );
-
-    ReactDOM.render(appDiv, rootElement);
 
 
 
