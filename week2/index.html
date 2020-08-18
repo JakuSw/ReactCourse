@@ -38,13 +38,22 @@
             color: orangered;
         }
 
-        .ProgressBar{
+        .ProgressBarTrackRemaining{
             border: 1px solid orangered;
             border-radius: 5px;
             height: 25px;
             margin-bottom: 20px;
             padding: 5px;
             background: linear-gradient(to left, orangered calc(100% - var(--passedTime)), transparent calc(100% - var(--passedTime)), transparent var(--passedTime), white var(--passedTime));
+        }
+
+        .DefaultProgressBar{
+            border: 1px solid orangered;
+            border-radius: 5px;
+            height: 25px;
+            margin-bottom: 20px;
+            padding: 5px;
+            background: linear-gradient(to right, orangered calc(100% - var(--passedTime)), transparent calc(100% - var(--passedTime)), transparent var(--passedTime), white var(--passedTime));            
         }
 
         .inactive{
@@ -69,7 +78,7 @@
         <div class="Timebox">
             <h1>Learning React</h1>
             <div id="root"></div>
-            <div class="ProgressBar " style="--passedTime: 40%"></div>
+            
             <button disabled>Start</button>
             <button>Stop</button>
             <button>Pause</button>
@@ -91,6 +100,16 @@
         miliseconds = addZerosForMiliseconds(miliseconds);
 
         return <h2 className="Clock">Time left {hours}:{minutes}:{seconds}:{miliseconds}</h2>
+    }
+
+    function ProgressBar({trackRemaining = false}){
+        if(trackRemaining){
+            return <div className="ProgressBarTrackRemaining" style={{"--passedTime": "40%"}}></div>
+        }else{
+            return <div className="DefaultProgressBar" style={{"--passedTime": "40%"}}></div>
+
+        }
+        
     }
 
     function addZeroWhenOneDigit(numberToCheck){
@@ -142,7 +161,10 @@
     }
 
     const rootElement = document.getElementById("root");
-    const element = (<Clock hours={3} minutes={7} seconds={0} miliseconds={23} />);
+    const element = (<div> 
+        <Clock hours={3} minutes={7} seconds={0} miliseconds={23} /> 
+        <ProgressBar />
+        </div>);
 
     ReactDOM.render(element, rootElement);
 
