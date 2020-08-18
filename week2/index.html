@@ -66,26 +66,13 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 </head>
+
 <body>
     <h1>React course - Week 2!</h1>
     <hr>
-    <div class="App">
-        <div class="TimeboxEditor inactive">
-            <label>What?<input disabled value="Learning React" type="text"></label><br>
-            <label>How long?<input disabled value="25" type="number"></label><br>
-            <button>Start task</button>
-        </div>
-        <div class="Timebox">
-            <h1>Learning React</h1>
-            <div id="root"></div>
-            
-            <button disabled>Start</button>
-            <button>Stop</button>
-            <button>Pause</button>
-            Breaks: 2
-        </div>
-    </div>
+    <div id="root"></div>
 </body>
+
 <script type="text/babel">
 
     function Clock({hours, minutes, seconds, miliseconds}){
@@ -110,6 +97,40 @@
 
         }
         
+    }
+
+    function Timebox(){
+        return (
+            <div className="Timebox">
+                <h1>Learning React</h1>
+                <Clock hours={3} minutes={7} seconds={0} miliseconds={23} /> 
+                <ProgressBar />
+                <button disabled>Start</button>
+                <button>Stop</button>
+                <button>Pause</button>
+                Breaks: 2
+            </div>
+        )
+    }
+
+    function TimeboxEditor() {
+        return (
+            <div className="TimeboxEditor inactive">
+                <label>What?<input disabled value="Learning React" type="text"/></label><br/>
+                <label>How long?<input disabled value="25" type="number"/></label><br/>
+                <button>Start task</button>
+            </div>
+        )
+    }
+
+    function App() {
+        return (
+            <div className="App">
+                <TimeboxEditor />
+                <Timebox />
+            </div>
+            
+        )
     }
 
     function addZeroWhenOneDigit(numberToCheck){
@@ -162,8 +183,7 @@
 
     const rootElement = document.getElementById("root");
     const element = (<div> 
-        <Clock hours={3} minutes={7} seconds={0} miliseconds={23} /> 
-        <ProgressBar />
+        <App />
         </div>);
 
     ReactDOM.render(element, rootElement);
