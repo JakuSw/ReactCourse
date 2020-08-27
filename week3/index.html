@@ -68,7 +68,7 @@
 </head>
 
 <body>
-    <h1>React course - Week 2!</h1>
+    <h1>React course - Week 3!</h1>
     <hr>
     <div id="root"></div>
 </body>
@@ -165,15 +165,17 @@
 
         render() {
             const {isRunning, isPaused, pausesCount, elapsedTimeInSeconds} = this.state;
-            const totalTimeInSeconds = 25;
+            const {title, totalTimeInMinutes} = this.props
+            const totalTimeInSeconds = totalTimeInMinutes * 60;
             const timeLeftInSeconds = totalTimeInSeconds - elapsedTimeInSeconds;
             const minutesLeft = Math.floor(timeLeftInSeconds/60);
             const secondsLeft = Math.floor(timeLeftInSeconds%60);
+            const hoursLeft = Math.floor(timeLeftInSeconds/3600);
             const progressInPercent = (elapsedTimeInSeconds / totalTimeInSeconds) * 100.0;
             return (
             <div className="Timebox">
-                <h1>Learning React</h1>
-                <Clock className={isPaused ? "inactive" : ""} hours={0} minutes={minutesLeft} seconds={secondsLeft} miliseconds={0} /> 
+                <h1>{title}</h1>
+                <Clock className={isPaused ? "inactive" : ""} hours={hoursLeft} minutes={minutesLeft} seconds={secondsLeft} miliseconds={0} /> 
                 <ProgressBar percent={progressInPercent} className={isPaused ? "inactive" : ""} trackRemaining = {true}/>
                 <button onClick = {this.handleStart} disabled = {isRunning}>Start</button>
                 <button onClick = {this.handleStop} disabled = {!isRunning}>Stop</button>
@@ -183,21 +185,63 @@
         )}
     }
 
-    function TimeboxEditor() {
-        return (
-            <div className="TimeboxEditor inactive">
-                <label>What?<input disabled value="Learning React" type="text"/></label><br/>
-                <label>How long?<input disabled value="25" type="number"/></label><br/>
-                <button>Start task</button>
-            </div>
-        )
+    class TimeboxEditor extends React.Component {
+            state = {
+                title: "Learning React",
+                totalTimeInMinutes: 15
+            }
+            handleTitleChange = (event) => {
+                this.setState({ title: event.target.value})
+            }
+
+            handleTotalTimeInMinutesChange = (event) => {
+                this.setState({ totalTimeInMinutes: event.target.value})
+            }
+            render() {
+                const {title, totalTimeInMinutes} = this.state;
+                return (
+                <div className="TimeboxEditor">
+                    <label>What?
+                        <input 
+                            onChange = {this.handleTitleChange}
+                            disabled = {false}
+                            value={title}
+                            type="text"
+                        />
+                    </label><br/>
+                    <label>How long?
+                        <input 
+                            onChange = {this.handleTotalTimeInMinutesChange}
+                            disabled = {false}
+                            value={totalTimeInMinutes}
+                            type="number"
+                        />
+                    </label><br/>
+                    <button>Start task</button>
+                </div>
+            )}
+    }
+
+    class EditableTimebox extends React.Component{
+        state = {
+            title: "Learning React",
+            totalTimeInMinutes: 20
+        }
+        render(){
+            const {title, totalTimeInMinutes} = this.state
+            return(
+                <>
+                <TimeboxEditor />
+                <Timebox title={title} totalTimeInMinutes={totalTimeInMinutes}/>
+                </>
+            )
+        }
     }
 
     function App() {
         return (
             <div className="App">
-                <TimeboxEditor />
-                <Timebox />
+                <EditableTimebox/>
             </div>
             
         )
@@ -248,8 +292,7 @@
             return 999;
         }else{
             return numberToCheck;
-   
-     }
+        }
     }
 
     const rootElement = document.getElementById("root");
