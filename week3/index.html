@@ -227,24 +227,54 @@
         )
     }
 
-    function TimeboxCreator({onCreate}) {
-        return (
-        <div className="TimeboxCreator">
-            <label>What?
-                <input 
-                    type="text"
-                />
-            </label><br/>
-            <label>How long?
-                <input 
-                    type="number"
-                />
-            </label><br/>
-            <button
-                onClick={onCreate}
-            >Add timebox</button>
-        </div>
-        )
+    class TimeboxCreator extends React.Component {
+        state = {
+            title: "",
+            totalTimeInMinutes: ""
+        }
+
+        handleTitleChange = (event) =>{
+            this.setState({ title: event.target.value})
+        }
+
+        handleTotalTimeInMinutesChange = (event) =>{
+            this.setState({ totalTimeInMinutes: event.target.value})
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault(); 
+            this.props.onCreate({
+                id: uuid.v4(), 
+                title: this.state.title, 
+                totalTimeInMinutes: this.state.totalTimeInMinutes});
+            this.setState({
+                title: "",
+                totalTimeInMinutes: ""
+            });
+        }
+
+        render() {
+            return (
+            <form onSubmit={this.handleSubmit} className="TimeboxCreator">
+                <label>What?
+                    <input 
+                        value={this.state.title}
+                        onChange={this.handleTitleChange}
+                        type="text"
+                    />
+                </label><br/>
+                <label>How long?
+                    <input 
+                        value={this.state.totalTimeInMinutes}
+                        onChange={this.handleTotalTimeInMinutesChange}
+                        type="number"
+                    />
+                </label><br/>
+                <button
+                >Add timebox</button>
+            </form>
+            )
+        }
     }
 
     class TimeboxList extends React.Component{
@@ -279,8 +309,8 @@
             })
         }
 
-        handleCreate = () => {
-            this.addTimebox({id: uuid.v4(), title: "New timebox", totalTimeInMinutes: 6})
+        handleCreate = (createdTimebox) => {
+            this.addTimebox(createdTimebox)
         }
 
         render() {
