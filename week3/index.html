@@ -230,32 +230,29 @@
     class TimeboxCreator extends React.Component {
         constructor(props) {
             super(props);
-            this.titleInput = React.createRef();
-            this.totalTimeInMinutesInput = React.createRef();
+            this.formInput = React.createRef();
         }
 
         handleSubmit = (event) => {
             event.preventDefault(); 
             this.props.onCreate({
                 id: uuid.v4(), 
-                title: this.titleInput.current.value, 
-                totalTimeInMinutes: this.totalTimeInMinutesInput.current.value});
-            this.titleInput.current.value = "";
-            this.totalTimeInMinutesInput.current.value = "";
+                title: this.formInput.current[0].value, 
+                totalTimeInMinutes: this.formInput.current[1].value});
+            this.formInput.current[0].value = "";
+            this.formInput.current[1].value = "";
         }
 
         render() {
             return (
-            <form onSubmit={this.handleSubmit} className="TimeboxCreator">
+            <form onSubmit={this.handleSubmit} ref={this.formInput} className="TimeboxCreator">
                 <label>What?
                     <input 
-                        ref={this.titleInput}
                         type="text"
                     />
                 </label><br/>
                 <label>How long?
                     <input 
-                        ref={this.totalTimeInMinutesInput}
                         type="number"
                     />
                 </label><br/>
