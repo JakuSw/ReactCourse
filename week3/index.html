@@ -228,29 +228,20 @@
     }
 
     class TimeboxCreator extends React.Component {
-        state = {
-            title: "",
-            totalTimeInMinutes: ""
-        }
-
-        handleTitleChange = (event) =>{
-            this.setState({ title: event.target.value})
-        }
-
-        handleTotalTimeInMinutesChange = (event) =>{
-            this.setState({ totalTimeInMinutes: event.target.value})
+        constructor(props) {
+            super(props);
+            this.titleInput = React.createRef();
+            this.totalTimeInMinutesInput = React.createRef();
         }
 
         handleSubmit = (event) => {
             event.preventDefault(); 
             this.props.onCreate({
                 id: uuid.v4(), 
-                title: this.state.title, 
-                totalTimeInMinutes: this.state.totalTimeInMinutes});
-            this.setState({
-                title: "",
-                totalTimeInMinutes: ""
-            });
+                title: this.titleInput.current.value, 
+                totalTimeInMinutes: this.totalTimeInMinutesInput.current.value});
+            this.titleInput.current.value = "";
+            this.totalTimeInMinutesInput.current.value = "";
         }
 
         render() {
@@ -258,15 +249,13 @@
             <form onSubmit={this.handleSubmit} className="TimeboxCreator">
                 <label>What?
                     <input 
-                        value={this.state.title}
-                        onChange={this.handleTitleChange}
+                        ref={this.titleInput}
                         type="text"
                     />
                 </label><br/>
                 <label>How long?
                     <input 
-                        value={this.state.totalTimeInMinutes}
-                        onChange={this.handleTotalTimeInMinutesChange}
+                        ref={this.totalTimeInMinutesInput}
                         type="number"
                     />
                 </label><br/>
