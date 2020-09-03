@@ -2,17 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 
-function Clock({className = "", hours, minutes, seconds}){
-    hours = hoursValidation(hours);
-    minutes = minutesAndSecondsValidation(minutes);
-    seconds = minutesAndSecondsValidation(seconds);
-
-    hours = addZeroWhenOneDigit(hours);
-    minutes = addZeroWhenOneDigit(minutes);
-    seconds = addZeroWhenOneDigit(seconds);
-
-    return <h2 className={"Clock " + className}>Time left {hours}:{minutes}:{seconds}</h2>
-}
+import Clock from "./components/Clock"
 
 function ProgressBar({className = "", percent = 50, trackRemaining = false}){
     if(trackRemaining){
@@ -330,53 +320,6 @@ function App() {
     )
 }
 
-function addZeroWhenOneDigit(numberToCheck){
-    if(numberToCheck.toString().length === 1){
-        return `0${numberToCheck.toString()}`
-    }else {
-        return numberToCheck.toString();
-    }
-}
-
-function addZerosForMiliseconds(numberToCheck){
-    if(numberToCheck.toString().length === 1){
-        return `00${numberToCheck.toString()}`
-    }else if(numberToCheck.toString().length === 2){
-        return `0${numberToCheck.toString()}`
-    }else {
-        return numberToCheck.toString();
-    }
-}
-
-function hoursValidation(numberToCheck){
-    if(numberToCheck < 0){
-        return 0;
-    }else if(numberToCheck > 23){
-        return 23;
-    }else{
-        return numberToCheck;
-    }
-}
-
-function minutesAndSecondsValidation(numberToCheck){
-    if(numberToCheck < 0){
-        return 0;
-    }else if(numberToCheck > 59){
-        return 59;
-    }else{
-        return numberToCheck;
-    }
-}
-
-function milisecondsValidation(numberToCheck){
-    if(numberToCheck < 0){
-        return 0;
-    }else if(numberToCheck > 999){
-        return 999;
-    }else{
-        return numberToCheck;
-    }
-}
 
 const rootElement = document.getElementById("root");
 const element = (<div> 
