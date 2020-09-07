@@ -9,7 +9,12 @@ function Clock({className = "", hours, minutes, seconds}){
     minutes = addZeroWhenOneDigit(minutes);
     seconds = addZeroWhenOneDigit(seconds);
 
-    return <h2 className={"Clock " + className}>Time left {hours}:{minutes}:{seconds}</h2>
+    return <h2 className={"Clock " + className}>Time left 
+        <span className="Clock__Hours"> {hours}</span>
+        <span className="Clock__Separator">:</span>
+        <span className="Clock__Minutes">{minutes}</span>
+        <span className="Clock__Separator">:</span>
+        <span className="Clock__Seconds">{seconds}</span></h2>
 }
 
 function addZeroWhenOneDigit(numberToCheck){
