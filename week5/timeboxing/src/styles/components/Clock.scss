@@ -1,0 +1,19 @@
+.Clock{
+    color: orangered;
+
+    &__Hours{
+        color: red;
+    }
+
+    &__Minutes{
+        color: pink;
+    }
+
+    &__Seconds{
+        color: royalblue;
+    }
+
+    &__Separator{
+        color: salmon;
+    }
+}
