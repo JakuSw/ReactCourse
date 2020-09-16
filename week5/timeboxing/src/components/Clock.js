@@ -6,7 +6,7 @@ function Clock({className, hours, minutes, seconds}){
     minutes = addZeroWhenOneDigit(minutesAndSecondsValidation(minutes));
     seconds = addZeroWhenOneDigit(minutesAndSecondsValidation(seconds));
 
-    return <h2 className={"Clock " + className}>Time left 
+    return <h2 style={{}}className={"Clock" + className}>Time left 
         <span className="Clock__Hours"> {hours}</span>
         <span className="Clock__Separator">:</span>
         <span className="Clock__Minutes">{minutes}</span>
