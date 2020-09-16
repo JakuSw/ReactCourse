@@ -2,10 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Clock({className, hours, minutes, seconds}){
-    // hours = hoursValidation(hours);
-    // minutes = minutesAndSecondsValidation(minutes);
-    // seconds = minutesAndSecondsValidation(seconds);
-
     hours = addZeroWhenOneDigit(hoursValidation(hours));
     minutes = addZeroWhenOneDigit(minutesAndSecondsValidation(minutes));
     seconds = addZeroWhenOneDigit(minutesAndSecondsValidation(seconds));
