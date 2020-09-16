@@ -20,18 +20,18 @@ class CurrentTimebox extends React.Component {
         this.intervalId = null;
     }
     
-    componentDidMount(){
-        console.count("componentDidMount");
-    }
+    // componentDidMount(){
+    //     console.count("componentDidMount");
+    // }
 
-    componentDidUpdate(){
-        console.count("componentDidUpdate");
-    }
+    // componentDidUpdate(){
+    //     console.count("componentDidUpdate");
+    // }
 
-    componentWillUnmount(){
-        console.count("componentWillUnmount");
-        this.stopTimer();
-    }
+    // componentWillUnmount(){
+    //     console.count("componentWillUnmount");
+    //     this.stopTimer();
+    // }
 
     startTimer(){
         if(this.intervalId === null){
