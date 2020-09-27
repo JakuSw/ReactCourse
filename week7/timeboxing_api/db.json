@@ -1,0 +1,7 @@
+{
+    "timeboxes": [
+        {"id": "a","title": "Learning React", "totalTimeInMinutes": 25},
+        {"id": "b","title": "Learning front end", "totalTimeInMinutes": 5},
+        {"id": "c","title": "Learning is cool", "totalTimeInMinutes": 15}
+    ]
+}

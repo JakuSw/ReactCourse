@@ -1,0 +1,23 @@
+@import "base.scss";
+@import "./components/App.scss";
+@import "./components/Timebox.scss";
+@import "./components/Clock.scss";
+@import "./components/TimeboxCreator.scss";
+@import "./components/ProgressBar.scss";
+@import "./components/CurrentTimebox.scss";
+@import "./components/TimeboxEditor.scss";
+
+input{
+    min-width: 60%;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+button{
+    font-size: 16px;
+    margin-left: 10px; 
+}
+
+.inactive{
+    filter: blur(2px) grayscale(1);
+}
