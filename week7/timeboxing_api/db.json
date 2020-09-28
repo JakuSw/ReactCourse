@@ -1,7 +1,19 @@
 {
-    "timeboxes": [
-        {"id": "a","title": "Learning React", "totalTimeInMinutes": 25},
-        {"id": "b","title": "Learning front end", "totalTimeInMinutes": 5},
-        {"id": "c","title": "Learning is cool", "totalTimeInMinutes": 15}
-    ]
+  "timeboxes": [
+    {
+      "id": "1",
+      "title": "API",
+      "totalTimeInMinutes": 25
+    },
+    {
+      "id": "2",
+      "title": "Learning front end",
+      "totalTimeInMinutes": 5
+    },
+    {
+      "id": "3",
+      "title": "Learning is cool",
+      "totalTimeInMinutes": 15
+    }
+  ]
 }

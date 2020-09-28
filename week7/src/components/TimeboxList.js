@@ -3,7 +3,7 @@ import React from "react";
 import TimeboxCreator from "./TimeboxCreator";
 import Timebox from "./Timebox";
 import ErrorBoundary from "./ErrorBoundary";
-import TimeboxesAPI from "../api/FakeTimeboxingApi"
+import TimeboxesAPI from "../api/FetchTimeboxingApi"
 
 
 
@@ -11,15 +11,14 @@ class TimeboxList extends React.Component{
     state = {
         timeboxes: [],
         loading:true,
-        error:null,
-        hasError: false
+        error:null
     }
 
-    componentDidMount(){
+    componentDidMount() {
         TimeboxesAPI.getAllTimeboxes().then(
-            (timeboxes) => this.setState({timeboxes})
+            (timeboxes) => this.setState({ timeboxes })
         ).catch(
-            (error) => Promise.reject(this.setState({error}))
+            (error) => this.setState({ error })
         ).finally(
             () => this.setState({loading: false})
         )
