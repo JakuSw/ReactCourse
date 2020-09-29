@@ -1,4 +1,16 @@
 {
+  "users": [
+    {
+      "email": "kuba@mail.pl",
+      "password": "$2a$10$qDbJo90U3qqd94V1KxAaleHv11Tgbrl.fbHMqSRddkHYZ7qvKcwQm",
+      "id": 1
+    },
+    {
+      "email": "ola@mail.pl",
+      "password": "$2a$10$Jx9AgLosVGhpuYrJftO7gO5Fz4zCT.dUpr0ytvwcsSBcOFYNvuliW",
+      "id": 2
+    }
+  ],
   "timeboxes": [
     {
       "id": "1",
@@ -14,6 +26,11 @@
       "id": "3",
       "title": "Learning is cool",
       "totalTimeInMinutes": 15
+    },
+    {
+      "title": "Eat",
+      "totalTimeInMinutes": "12",
+      "id": "g9L3c-x"
     }
   ]
 }
