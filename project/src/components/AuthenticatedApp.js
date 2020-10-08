@@ -8,8 +8,8 @@ import ErrorBoundary from "./ErrorBoundary";
 function AuthenticatedApp({accessToken, onLogout}) {
     return (
         <>
-            <Header accessToken={accessToken} onLogout={onLogout}/>
-            <TimeboxList accessToken={accessToken}/>
+            <Header onLogout={onLogout}/>
+            <TimeboxList />
             <ErrorBoundary message="Error in EditableTimebox">
                 <EditableTimebox/>  
             </ErrorBoundary>
