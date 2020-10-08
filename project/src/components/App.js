@@ -1,11 +1,8 @@
 import React from "react";
-
-import TimeboxList from "./TimeboxList";
-import EditableTimebox from "./EditableTimebox"
 import ErrorBoundary from "./ErrorBoundary";
 import LoginForm from "./LoginForm";
 import AuthenticationApi from "../api/FetchAuthenticationApi";
-import jwt from "jsonwebtoken";
+import AuthenticatedApp from "./AuthenticatedApp";
 
 class App extends React.Component{
     state = {
@@ -15,11 +12,6 @@ class App extends React.Component{
 
     isUserLoggedIn(){
         return !!this.state.accessToken;
-    }
-
-    getUserEmail(){
-        const decodedToken = jwt.decode(this.state.accessToken);
-        return decodedToken.email;
     }
 
     handleLoginAttempt = (credentials) => {
@@ -51,14 +43,7 @@ class App extends React.Component{
                 {
                     this.isUserLoggedIn() ? 
                     <>
-                        <header className="header">
-                            Hello {this.getUserEmail()}
-                            <a onClick={this.handleLogout} className="header__logout-link" href="#">Logout</a>
-                        </header>
-                        <TimeboxList accessToken={this.state.accessToken}/>
-                        <ErrorBoundary message="Error in EditableTimebox">
-                            <EditableTimebox/>  
-                        </ErrorBoundary>
+                        <AuthenticatedApp accessToken={this.state.accessToken} onLogout={this.handleLogout}/>
 
                     </> :
                     <LoginForm 
