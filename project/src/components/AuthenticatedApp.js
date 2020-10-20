@@ -3,6 +3,7 @@ import TimeboxList from "./TimeboxList";
 import EditableTimebox from "./EditableTimebox"
 import Header from "./Header";
 import ErrorBoundary from "./ErrorBoundary";
+import InspirationalQuote from './InspirationalQuote';
 
 
 function AuthenticatedApp({accessToken, onLogout}) {
@@ -13,6 +14,7 @@ function AuthenticatedApp({accessToken, onLogout}) {
             <ErrorBoundary message="Error in EditableTimebox">
                 <EditableTimebox/>  
             </ErrorBoundary>
+            <InspirationalQuote/>
         </>
     )
     
