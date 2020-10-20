@@ -17,9 +17,9 @@ class InspirationalQuote extends React.Component {
             <>
             {this.state.quote ?
                 <figure>
-                    <blockquote>{this.state.text}</blockquote>
-                    <figcaption><cite>{this.state.author}</cite></figcaption>
-                </figure>:
+                    <blockquote>{this.state.quote.text}</blockquote>
+                    <figcaption><cite>{this.state.quote.author}</cite></figcaption>
+                </figure> :
                 "..."
             }
             </>
