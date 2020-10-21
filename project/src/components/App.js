@@ -1,64 +1,59 @@
-import React from "react";
+import React, {useState} from "react";
 import ErrorBoundary from "./ErrorBoundary";
 import LoginForm from "./LoginForm";
 import AuthenticationApi from "../api/FetchAuthenticationApi";
 import AuthenticationContext from "../contexts/AuthenticationContext";
 const AuthenticatedApp = React.lazy(() => import("./AuthenticatedApp"));
 
-class App extends React.Component{
-    state = {
-        accessToken: null,
-        previousLoginAttemptFailed: false
+function App(){
+    const [accessToken, setAccessToken] = useState(null);
+    const [previousLoginAttemptFailed, setpreviousLoginAttemptFailed] = useState(false);
+
+
+    function isUserLoggedIn() {
+        return !!accessToken;
     }
 
-    isUserLoggedIn(){
-        return !!this.state.accessToken;
-    }
-
-    handleLoginAttempt = (credentials) => {
+    function handleLoginAttempt(credentials) {
         AuthenticationApi.login(credentials)
             .then(({accessToken}) => {
-                this.setState({
-                    accessToken,
-                    previousLoginAttemptFailed:false
-                })
+                setAccessToken(accessToken);
+                setpreviousLoginAttemptFailed(false)
+                
             })
             .catch(() => {
-                this.setState({
-                    previousLoginAttemptFailed:true
-                })
+                setpreviousLoginAttemptFailed(true)
+
             })
     }
 
-    handleLogout = () => {
-        this.setState({
-            accessToken: null,
-            previousLoginAttemptFailed:false
-        })
+    function handleLogout() {
+        setAccessToken(null);
+        setpreviousLoginAttemptFailed(false)
     }
 
-    render() {
-        return (
-            <div className="App">
-                <ErrorBoundary message="Global error occured">
+
+    return (
+        <div className="App">
+            <ErrorBoundary message="Global error occured">
+            {
+                isUserLoggedIn() ? 
+                <AuthenticationContext.Provider value={{accessToken:accessToken}}>
                 {
-                    this.isUserLoggedIn() ? 
-                    <AuthenticationContext.Provider value={{accessToken:this.state.accessToken}}>
-                    {
-                        <React.Suspense fallback="...Loading">
-                            <AuthenticatedApp onLogout={this.handleLogout}/>
-                        </React.Suspense>
-                    }
-                    </AuthenticationContext.Provider> :
-                    <LoginForm 
-                        errorMessage={this.state.previousLoginAttemptFailed ? "Fail to login" : null}
-                        onLoginAttempt={this.handleLoginAttempt}
-                    />
+                    <React.Suspense fallback="...Loading">
+                        <AuthenticatedApp onLogout={handleLogout}/>
+                    </React.Suspense>
                 }
-                </ErrorBoundary>
-            </div>
-        )
-    }
+                </AuthenticationContext.Provider> :
+                <LoginForm 
+                    errorMessage={previousLoginAttemptFailed ? "Fail to login" : null}
+                    onLoginAttempt={handleLoginAttempt}
+                />
+            }
+            </ErrorBoundary>
+        </div>
+    )
+    
     
 }
 

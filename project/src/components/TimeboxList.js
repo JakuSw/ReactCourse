@@ -1,11 +1,11 @@
 import React from "react";
 
 import TimeboxCreator from "./TimeboxCreator";
-import Timebox from "./Timebox";
 import ErrorBoundary from "./ErrorBoundary";
 import TimeboxesAPI from "../api/FetchTimeboxingApi"
 import AuthenticationContext from "../contexts/AuthenticationContext";
 
+const Timebox = React.lazy(() => import("./Timebox"));
 
 
 class TimeboxList extends React.Component{
@@ -75,13 +75,15 @@ class TimeboxList extends React.Component{
                 {this.state.error ? "Something went wrong" : null}
                 {
                     this.state.timeboxes.map((timebox, index) => (
-                        <Timebox 
-                            key={timebox.id} 
-                            title={timebox.title} 
-                            totalTimeInMinutes={timebox.totalTimeInMinutes}
-                            onDelete={() => this.removeTimebox(index)}
-                            onEdit={(updatedTitle) => this.updateTimebox(index, {...timebox, title: `${updatedTitle}`})}
-                            />
+                        <React.Suspense fallback="...Loading">
+                            <Timebox 
+                                key={timebox.id} 
+                                title={timebox.title} 
+                                totalTimeInMinutes={timebox.totalTimeInMinutes}
+                                onDelete={() => this.removeTimebox(index)}
+                                onEdit={(updatedTitle) => this.updateTimebox(index, {...timebox, title: `${updatedTitle}`})}
+                                />
+                        </React.Suspense>
                 ))}
                 </ErrorBoundary>
             </>
