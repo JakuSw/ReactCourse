@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import jwt from "jsonwebtoken";
 import AuthenticationContext from '../contexts/AuthenticationContext';
 
 
-function UserGreeting({accessToken}) {
+function UserGreeting() {
+    const {accessToken} = useContext(AuthenticationContext);
     return(
-        <AuthenticationContext.Consumer>
-            {
-                ({accessToken}) => <>Hello {getUserEmail(accessToken)}</>
-            }
-        </AuthenticationContext.Consumer>
+        <>Hello {getUserEmail(accessToken)}</>
     )
 }
 

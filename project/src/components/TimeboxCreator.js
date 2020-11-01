@@ -1,39 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 
 
-class TimeboxCreator extends React.Component {
-    constructor(props) {
-        super(props);
-        this.formInput = React.createRef();
-    }
+function TimeboxCreator(props){
+    const formInput = useRef();
 
-    handleSubmit = (event) => {
+    function handleSubmit(event){
         event.preventDefault(); 
-        this.props.onCreate({
-            title: this.formInput.current[0].value, 
-            totalTimeInMinutes: this.formInput.current[1].value});
-        this.formInput.current[0].value = "";
-        this.formInput.current[1].value = "";
+        props.onCreate({
+            title: formInput.current[0].value, 
+            totalTimeInMinutes: formInput.current[1].value});
+        formInput.current[0].value = "";
+        formInput.current[1].value = "";
     }
 
-    render() {
-        return (
-        <form onSubmit={this.handleSubmit} ref={this.formInput} className="TimeboxCreator">
-            <label>What?
-                <input 
-                    type="text"
-                />
-            </label><br/>
-            <label>How long?
-                <input 
-                    type="number"
-                />
-            </label><br/>
-            <button
-            >Add timebox</button>
-        </form>
-        )
-    }
+    return (
+    <form onSubmit={handleSubmit} ref={formInput} className="TimeboxCreator">
+        <label>What?
+            <input 
+                type="text"
+            />
+        </label><br/>
+        <label>How long?
+            <input 
+                type="number"
+            />
+        </label><br/>
+        <button
+        >Add timebox</button>
+    </form>
+    )
+    
 }
 
 export default TimeboxCreator;

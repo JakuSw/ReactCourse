@@ -1,47 +1,45 @@
-import React from "react";
+import React, { useRef } from "react";
 
 
-class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.formInput = React.createRef();
-    }
+function LoginForm(props){
 
-    handleSubmit = (event) => {
+    const formInput = useRef();
+
+    function handleSubmit(event){
         event.preventDefault(); 
-        this.props.onLoginAttempt({
-            email: this.formInput.current[0].value, 
-            password: this.formInput.current[1].value});
-        this.formInput.current[0].value = "";
-        this.formInput.current[1].value = "";
+        props.onLoginAttempt({
+            email: formInput.current[0].value, 
+            password: formInput.current[1].value});
+        formInput.current[0].value = "";
+        formInput.current[1].value = "";
     }
 
-    render() {
-        return (
-        <form onSubmit={this.handleSubmit} ref={this.formInput} className="LoginForm">
-        {
-            this.props.errorMessage ? 
-            <div className="LoginForm__error-message">{this.props.errorMessage}</div>
-            :
-            null
-        }
-            <label>Email
-                <input 
-                    type="text"
-                    defaultValue="ola@mail.pl"
-                />
-            </label><br/>
-            <label>Password
-                <input 
-                    type="password"
-                    defaultValue="asdfgh"
-                />
-            </label><br/>
-            <button
-            >Login</button>
-        </form>
-        )
+
+    return (
+    <form onSubmit={handleSubmit} ref={formInput} className="LoginForm">
+    {
+        props.errorMessage ? 
+        <div className="LoginForm__error-message">{props.errorMessage}</div>
+        :
+        null
     }
+        <label>Email
+            <input 
+                type="text"
+                defaultValue="ola@mail.pl"
+            />
+        </label><br/>
+        <label>Password
+            <input 
+                type="password"
+                defaultValue="asdfgh"
+            />
+        </label><br/>
+        <button
+        >Login</button>
+    </form>
+    )
+    
 }
 
 export default LoginForm;

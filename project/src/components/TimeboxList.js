@@ -22,7 +22,7 @@ function TimeboxList() {
         ).finally(
             () => setLoading(false)
         )
-    })
+    },[])
 
     function addTimebox(timebox)  {
         TimeboxesAPI.addTimebox(timebox, accessToken).then(
