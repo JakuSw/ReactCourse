@@ -13,11 +13,6 @@
   ],
   "timeboxes": [
     {
-      "id": "2",
-      "title": "Learning front end",
-      "totalTimeInMinutes": 5
-    },
-    {
       "id": "3",
       "title": "Learning is cool",
       "totalTimeInMinutes": 15
@@ -26,6 +21,11 @@
       "title": "API",
       "totalTimeInMinutes": "15",
       "id": "az91lq5"
+    },
+    {
+      "title": "Watch F1",
+      "totalTimeInMinutes": "90",
+      "id": "q0v4U-d"
     }
   ]
 }

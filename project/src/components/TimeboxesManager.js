@@ -8,7 +8,7 @@ import AuthenticationContext from "../contexts/AuthenticationContext";
 const Timebox = React.lazy(() => import("./Timebox"));
 
 
-function TimeboxList() {
+function TimeboxesManager() {
     const [timeboxes, setTimeboxes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -71,22 +71,30 @@ function TimeboxList() {
             <ErrorBoundary message="Some error in timebox list">
             {loading ? "Loading" : null}
             {error ? "Something went wrong" : null}
-            {
-                timeboxes.map((timebox, index) => (
-                    <React.Suspense fallback="...Loading">
-                        <Timebox 
-                            key={timebox.id} 
-                            title={timebox.title} 
-                            totalTimeInMinutes={timebox.totalTimeInMinutes}
-                            onDelete={() => removeTimebox(index)}
-                            onEdit={(updatedTitle) => updateTimebox(index, {...timebox, title: `${updatedTitle}`})}
-                            />
-                    </React.Suspense>
-            ))}
+            <TimeboxesList 
+                timeboxes = {timeboxes}
+                onTimeboxDelete = {removeTimebox}
+                onTimeboxEdit = {updateTimebox}
+
+            />
             </ErrorBoundary>
             
         </>
     )
 }
 
-export default TimeboxList;
+export default TimeboxesManager;
+
+function TimeboxesList({timeboxes, onTimeboxDelete, onTimeboxEdit}){
+    return timeboxes.map((timebox, index) => (
+        <React.Suspense fallback="...Loading">
+            <Timebox 
+                key={timebox.id} 
+                title={timebox.title} 
+                totalTimeInMinutes={timebox.totalTimeInMinutes}
+                onDelete={() => onTimeboxDelete(index)}
+                onEdit={(updatedTitle) => onTimeboxEdit(index, {...timebox, title: `${updatedTitle}`})}
+            />
+        </React.Suspense>
+))
+}

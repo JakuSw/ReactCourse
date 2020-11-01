@@ -1,5 +1,5 @@
 import React from 'react';
-import TimeboxList from "./TimeboxList";
+import TimeboxesManager from "./TimeboxesManager";
 import EditableTimebox from "./EditableTimebox"
 import Header from "./Header";
 import ErrorBoundary from "./ErrorBoundary";
@@ -10,7 +10,7 @@ function AuthenticatedApp({accessToken, onLogout}) {
     return (
         <>
             <Header onLogout={onLogout}/>
-            <TimeboxList />
+            <TimeboxesManager />
             <ErrorBoundary message="Error in EditableTimebox">
                 <EditableTimebox/>  
             </ErrorBoundary>
