@@ -4,8 +4,9 @@ import TimeboxCreator from "./TimeboxCreator";
 import ErrorBoundary from "./ErrorBoundary";
 import TimeboxesAPI from "../api/FetchTimeboxingApi"
 import AuthenticationContext from "../contexts/AuthenticationContext";
+import { TimeboxesList } from "./TimeboxesList";
 
-const Timebox = React.lazy(() => import("./Timebox"));
+export const Timebox = React.lazy(() => import("./Timebox"));
 
 
 function TimeboxesManager() {
@@ -85,16 +86,3 @@ function TimeboxesManager() {
 
 export default TimeboxesManager;
 
-function TimeboxesList({timeboxes, onTimeboxDelete, onTimeboxEdit}){
-    return timeboxes.map((timebox, index) => (
-        <React.Suspense fallback="...Loading">
-            <Timebox 
-                key={timebox.id} 
-                title={timebox.title} 
-                totalTimeInMinutes={timebox.totalTimeInMinutes}
-                onDelete={() => onTimeboxDelete(index)}
-                onEdit={(updatedTitle) => onTimeboxEdit(index, {...timebox, title: `${updatedTitle}`})}
-            />
-        </React.Suspense>
-))
-}
