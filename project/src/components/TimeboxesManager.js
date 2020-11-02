@@ -7,6 +7,7 @@ import AuthenticationContext from "../contexts/AuthenticationContext";
 import { TimeboxesList } from "./TimeboxesList";
 
 export const Timebox = React.lazy(() => import("./Timebox"));
+export const ReadOnlyTimebox = React.lazy(() => import("./ReadOnlyTimebox"));
 
 
 function TimeboxesManager() {
@@ -65,6 +66,32 @@ function TimeboxesManager() {
         }
     }
 
+    function renderTimebox(timebox, index){
+        return(
+            <React.Suspense fallback="...Loading">
+                <Timebox
+                key={timebox.id}
+                title={timebox.title}
+                totalTimeInMinutes={timebox.totalTimeInMinutes}
+                onDelete={() => removeTimebox(index)}
+                onEdit={(updatedTitle) => updateTimebox(index, { ...timebox, title: `${updatedTitle}` })} 
+                />
+            </React.Suspense>
+        )
+    }
+
+    function renderReadOnlyTimebox(timebox, index){
+        return(
+            <React.Suspense fallback="...Loading">
+                <ReadOnlyTimebox
+                key={timebox.id}
+                title={timebox.title}
+                totalTimeInMinutes={timebox.totalTimeInMinutes}
+                />
+            </React.Suspense>
+        )
+    }
+
     return (
         <>
 
@@ -74,9 +101,7 @@ function TimeboxesManager() {
             {error ? "Something went wrong" : null}
             <TimeboxesList 
                 timeboxes = {timeboxes}
-                onTimeboxDelete = {removeTimebox}
-                onTimeboxEdit = {updateTimebox}
-
+                renderTimebox = {renderReadOnlyTimebox}
             />
             </ErrorBoundary>
             
