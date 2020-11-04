@@ -13,19 +13,19 @@
   ],
   "timeboxes": [
     {
-      "id": "3",
-      "title": "Learning is cool",
-      "totalTimeInMinutes": 15
-    },
-    {
       "title": "API",
-      "totalTimeInMinutes": "15",
+      "totalTimeInMinutes": "14",
       "id": "az91lq5"
     },
     {
       "title": "Watch F1",
       "totalTimeInMinutes": "90",
       "id": "q0v4U-d"
+    },
+    {
+      "title": "asda",
+      "totalTimeInMinutes": "13",
+      "id": "h81O1Su"
     }
   ]
 }

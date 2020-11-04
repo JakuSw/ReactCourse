@@ -1,38 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
 
-function TimeboxEditor(props) {
-    const {
-        title, 
-        totalTimeInMinutes,
-        isEditable,
-        onTitleChange,
-        onTotalTimeInMinutesChange,
-        onConfirm
-    } = props;
+
+function TimeboxEditor(props){
+    const formInput = useRef();
+
+    function handleSubmit(event){
+        event.preventDefault(); 
+        props.onUpdate({
+            title: formInput.current[0].value, 
+            totalTimeInMinutes: formInput.current[1].value});
+        resetToInitialValues();
+    }
+
+    function handleCancel(){
+        resetToInitialValues();
+        props.onCancel();
+    }
+
+    function resetToInitialValues(){
+        formInput.current[0].value = props.initialTitle;
+        formInput.current[1].value = props.initialTotalTimeInMinutes;
+    }
     return (
-    <div className={`TimeboxEditor ${isEditable ? "" : "inactive"}`}>
+    <form onSubmit={handleSubmit} ref={formInput} className="TimeboxCreator">
         <label>What?
             <input 
-                onChange = {onTitleChange}
-                disabled = {!isEditable}
-                value={title}
                 type="text"
+                defaultValue={props.initialTitle}
             />
         </label><br/>
         <label>How long?
             <input 
-                onChange = {onTotalTimeInMinutesChange}
-                disabled = {!isEditable}
-                value={totalTimeInMinutes}
                 type="number"
+                defaultValue={props.initialTotalTimeInMinutes}
+
             />
         </label><br/>
+        <a onClick = {handleCancel}>Cancel</a>
         <button
-            onClick = {onConfirm}
-            disabled = {!isEditable}
         >Save changes</button>
-    </div>
+    </form>
     )
+    
 }
 
 export default TimeboxEditor;

@@ -7,7 +7,7 @@ class Timebox extends React.Component {
 
     handleEditEnable = (event) => {
         event.preventDefault(); 
-        this.setState({isUpdating: !this.state.isUpdating})
+        this.props.onEdit();
     }
 
     render(){
@@ -19,9 +19,9 @@ class Timebox extends React.Component {
                 <h3>{this.props.title} - {this.props.totalTimeInMinutes} min.</h3>
                 <button onClick={this.props.onDelete}>Delete</button>
                 <button onClick={this.handleEditEnable}>Edit</button>
-                {this.state.isUpdating ? <TimeboxUpdate 
+                {/* {this.state.isUpdating ? <TimeboxUpdate 
                     onSave={this.props.onEdit}
-                    /> : null}
+                    /> : null} */}
             </div>
         )}
 }

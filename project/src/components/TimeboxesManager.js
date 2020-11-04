@@ -5,6 +5,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import TimeboxesAPI from "../api/FetchTimeboxingApi"
 import AuthenticationContext from "../contexts/AuthenticationContext";
 import { TimeboxesList } from "./TimeboxesList";
+import TimeboxEditor from "./TimeboxEditor";
 
 export const Timebox = React.lazy(() => import("./Timebox"));
 export const ReadOnlyTimebox = React.lazy(() => import("./ReadOnlyTimebox"));
@@ -14,6 +15,7 @@ function TimeboxesManager() {
     const [timeboxes, setTimeboxes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editIndex, setEditIndex] = useState(null);
     const { accessToken } = useContext(AuthenticationContext)
 
     useEffect(() => {
@@ -68,15 +70,31 @@ function TimeboxesManager() {
 
     function renderTimebox(timebox, index){
         return(
-            <React.Suspense fallback="...Loading">
-                <Timebox
-                key={timebox.id}
-                title={timebox.title}
-                totalTimeInMinutes={timebox.totalTimeInMinutes}
-                onDelete={() => removeTimebox(index)}
-                onEdit={(updatedTitle) => updateTimebox(index, { ...timebox, title: `${updatedTitle}` })} 
+            <>
+
+            {editIndex === index ?
+                <TimeboxEditor
+                    initialTitle = {timebox.title}
+                    initialTotalTimeInMinutes = {timebox.totalTimeInMinutes}
+                    onCancel = {() => setEditIndex(null)}
+                    onUpdate = {(updatedTimebox) => {
+                        updateTimebox(index, { ...timebox, ...updatedTimebox})
+                        setEditIndex(null)
+                    }} 
+                
                 />
-            </React.Suspense>
+                :
+                <React.Suspense fallback="...Loading">
+                    <Timebox
+                    key={timebox.id}
+                    title={timebox.title}
+                    totalTimeInMinutes={timebox.totalTimeInMinutes}
+                    onDelete={() => removeTimebox(index)}
+                    onEdit={() => setEditIndex(index)} 
+                    />
+                </React.Suspense>
+            }
+            </>
         )
     }
 
@@ -101,7 +119,7 @@ function TimeboxesManager() {
             {error ? "Something went wrong" : null}
             <TimeboxesList 
                 timeboxes = {timeboxes}
-                renderTimebox = {renderReadOnlyTimebox}
+                renderTimebox = {renderTimebox}
             />
             </ErrorBoundary>
             
